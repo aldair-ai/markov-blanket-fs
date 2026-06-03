@@ -18,7 +18,7 @@ $$ \text{dof} = \sum_{z \in \text{strata}(Z)} (r_z - 1)(c_z - 1) $$
 where `r_z`, `c_z` are the numbers of values of X and Y that **actually occur**
 in stratum `z`. Using the naive `(|X|-1)(|Y|-1)|Z|` over-counts when some
 configurations never appear (structural zeros), making the test too
-conservative. The adjusted dof in `ci_tests/g_test.py` handles this.
+conservative. The G-test built in `notebooks/02_conditional_independence_demo.ipynb` uses the adjusted dof.
 
 ## Sample size and the curse of conditioning
 
@@ -34,15 +34,15 @@ per cell collapse. Rules of thumb:
 ## When asymptotics fail — permutation tests
 
 If cells are sparse, the χ² null is wrong. A **within-stratum permutation test**
-(`ci_tests/mi_test.py`) gives a calibrated p-value: shuffle X within each
+(an exercise in `exercises/06_ci_tests.md`) gives a calibrated p-value: shuffle X within each
 stratum of Z (preserving `P(X|Z)` and `P(Y|Z)` but breaking the X–Y link) and
 compare the observed CMI to the shuffled distribution. Slower but robust.
 
 ## Continuous & mixed data
 
-- **Gaussian:** Fisher's Z test on the partial correlation (`fisher_z.py`).
+- **Gaussian:** Fisher's Z test on the partial correlation (sketched in `exercises/06_ci_tests.md`).
   `X ⊥ Y | Z ⟺ partial correlation = 0` under joint normality.
-- **Mixed / nonlinear:** discretize (`utils/discretization.py`, quantile binning)
+- **Mixed / nonlinear:** discretize (quantile binning)
   then use the G-test, or use a k-NN CMI estimator (KSG). Discretization loses
   information; choose bin count carefully (too many → sparse strata).
 
@@ -62,9 +62,9 @@ the standard MB papers typically use a fixed α and rely on the shrink phase.
 ## Validation checklist
 
 1. Does the test give `p > α` for genuinely independent pairs in
-   `datasets/synthetic.py`?
+   the synthetic networks built in the notebooks?
 2. Does it give `p < α` for dependent pairs?
 3. Does conditioning on the right variable flip a dependence to independence
    (e.g. `B ⊥ C | A` when B,C are both driven by A)?
 
-`tests/test_ci_tests.py` checks exactly these.
+The notebook `02_conditional_independence_demo.ipynb` checks exactly these.

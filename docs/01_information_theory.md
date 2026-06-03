@@ -52,14 +52,12 @@ The plug-in (empirical) estimator is exact for the observed distribution but
 This matters enormously once `Z` is large, because each stratum of `Z` has few
 samples. Mitigations:
 
-- Miller–Madow bias correction (`info_theory/estimators.py`).
-- Permutation tests for calibrated p-values (`ci_tests/mi_test.py`).
+- Miller–Madow bias correction (an exercise in `exercises/01_information_theory.md`).
+- Permutation tests for calibrated p-values (an exercise in `exercises/06_ci_tests.md`).
 - For continuous data, the KSG k-NN estimator instead of binning.
 
 ## Try it
 
-See `notebooks/01_entropy_and_mi.ipynb` and:
-
-```python
-from mbfs.info_theory import mutual_information, conditional_mutual_information
-```
+Open `notebooks/01_entropy_and_mi.ipynb`. It builds `entropy`, `mutual_information`,
+and `conditional_mutual_information` from scratch with numpy — no library to install
+— and verifies the identities above on synthetic data.

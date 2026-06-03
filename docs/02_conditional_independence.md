@@ -52,13 +52,10 @@ more reliable than naive Grow-Shrink on real data.
 | **Fisher's Z** | Gaussian | z-transform of partial correlation | Normal |
 | **Permutation (MI)** | discrete | `Î(X;Y\|Z)` | empirical, via within-stratum shuffles |
 
-All share the `CITest` interface, so algorithms are decoupled from the test:
-
-```python
-from mbfs.ci_tests import GTest
-ci = GTest(df)
-ci.independent("B", "C", ["A"], alpha=0.05)   # -> True/False
-```
+In a real library these share one `CITest` interface so algorithms are decoupled
+from the test. In `notebooks/02_conditional_independence_demo.ipynb` we implement
+the **G-test** from scratch (`g_test(x, y, z) -> (statistic, p_value)`) and use it
+to decide independence, e.g. checking that `B ⊥ C | A` holds in a chain.
 
 ## Degrees of freedom (the subtle part)
 

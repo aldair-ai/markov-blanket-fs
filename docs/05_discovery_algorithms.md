@@ -20,7 +20,7 @@ Under a perfect CI oracle + faithfulness, the result is exactly `MB(T)`.
 
 *Weakness:* the grow phase can add many variables before shrinking, so `S`
 (hence the conditioning set) gets large → CI tests on real data become
-unreliable. → `algorithms/grow_shrink.py`
+unreliable. → built from scratch in `notebooks/04_grow_shrink_from_scratch.ipynb`
 
 ## IAMB — Tsamardinos & Aliferis, 2003
 
@@ -28,13 +28,13 @@ Same two phases, but the grow step adds the variable with the **maximum**
 association with `T` given the current blanket. By admitting the most relevant
 variable first, the blanket stays small throughout growth, so conditioning sets
 stay small and tests stay reliable.
-→ `algorithms/iamb.py`
+→ also implemented in `notebooks/04_grow_shrink_from_scratch.ipynb`
 
 ## Inter-IAMB
 
 Interleaves shrink **into** grow: after every single addition, run a shrink
 pass. This keeps the candidate blanket minimal at every step — the best
-false-positive control of the IAMB family. → `algorithms/inter_iamb.py` (stub)
+false-positive control of the IAMB family. (Implement as an exercise — see `exercises/05_discovery_algorithms.md`.)
 
 ## HITON-MB — Aliferis et al., 2003
 
@@ -46,14 +46,14 @@ blanket, it conditions on *subsets*, which is far more sample-efficient:
    `T`'s children).
 3. `MB(T) = PC(T) ∪ spouses(T)`.
 
-→ `algorithms/hiton_mb.py` (stub)
+(Implement as an exercise — see `exercises/05_discovery_algorithms.md`.)
 
 ## MMMB / MMPC — Tsamardinos et al., 2003
 
 Uses the **max-min** heuristic: admit a variable only if its *minimum*
 association with `T` over all conditioning subsets is *maximal* — strong control
 against false positives. Then recovers spouses like HITON.
-→ `algorithms/mmmb.py` (stub)
+(Implement as an exercise — see `exercises/05_discovery_algorithms.md`.)
 
 ## How to choose
 
@@ -73,8 +73,8 @@ you have many variables and limited samples.
 - **Order dependence.** GS/IAMB results can depend on candidate ordering; sort by
   association for stability.
 - **Symmetry correction.** `I(X;Y|Z) = I(Y;X|Z)` — exploit it for caching
-  (`utils/caching.py`).
+  (demonstrated in `notebooks/05_benchmark_on_known_network.ipynb`).
 - **Large conditioning sets.** When `|S|` grows, strata become tiny and CI tests
   unreliable; this is the core motivation for the later algorithms.
-- **Always validate against known ground truth** (`datasets/synthetic.py`) before
+- **Always validate against known ground truth** (the synthetic networks built in the notebooks) before
   trusting results on real data.
