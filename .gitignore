@@ -1,7 +1,17 @@
+# Python cache
 __pycache__/
 *.py[cod]
+
+# Jupyter
 .ipynb_checkpoints/
+
+# Virtual environments
 .venv/
 venv/
+myenv/
+
+# macOS
 .DS_Store
+
+# Build files
 build_nb*.py
